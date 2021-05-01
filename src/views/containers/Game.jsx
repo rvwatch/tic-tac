@@ -70,6 +70,10 @@ class Game extends Component {
       // Grid 'item' in a container must have columns (xs, sm, md, etc.) that add up to 12, per grid docs:
       // https://material-ui-next.com/layout/grid/
       <div>
+          <h3>Score:</h3>
+          <h4>Draws: {}</h4>
+          <h4>Player1: {}</h4>
+          <h4>Player2: {}</h4>
         <Grid container spacing={16}>
           <Grid item xs={12} sm={6} md={4}>
             <Board board={board} onMove={this.handleBoardOnMove} />
