@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
 
 import { playTurn, checkWinner, newGame } from '../../utils/operations';
+import { setDraws } from '../../actions';
 
 import Board from '../components/Board.jsx';
 import PlayerInfo from '../components/PlayerInfo.jsx';
@@ -25,13 +26,13 @@ class Game extends Component {
   handleBoardOnMove(square) {
     // when a square is clicked we want to mark that square for the current player
 
-    const { board, player, gameover, playTurn, checkWinner } = this.props;
+    const { board, player, gameover, playTurn, checkWinner, setDraws, scoreboard, winner } = this.props;
     const { row, col } = square;
 
     // only mark if the game is still in progress and the square is empty (none)
     // otherwise, ignore the play
     if (gameover || board[row][col] !== 0) {
-      return;
+      return
     }
 
     // make a play for the player
@@ -40,8 +41,10 @@ class Game extends Component {
     const hasWinner = checkWinner(board, player);
 
     if (hasWinner) {
+      console.log(winner)
       this.setState({ showDialog: true });
     }
+
   }
 
   handleDialogClick(answer) {
@@ -61,8 +64,9 @@ class Game extends Component {
 
   render() {
     const { showDialog } = this.state;
-    const { board, player, gameover, winner } = this.props;
+    const { board, player, gameover, winner, scoreboard } = this.props;
     const draw = winner === 0;
+    // console.log(this.props);
 
     return (
       // at extra-small (xs) size the grid show have two rows
@@ -71,9 +75,9 @@ class Game extends Component {
       // https://material-ui-next.com/layout/grid/
       <div>
           <h3>Score:</h3>
-          <h4>Draws: {}</h4>
-          <h4>Player1: {}</h4>
-          <h4>Player2: {}</h4>
+          <h4>Draws: { scoreboard.draws }</h4>
+          <h4>Player1: { scoreboard.player1wins }</h4>
+          <h4>Player2: { scoreboard.player2wins }</h4>
         <Grid container spacing={16}>
           <Grid item xs={12} sm={6} md={4}>
             <Board board={board} onMove={this.handleBoardOnMove} />
@@ -110,19 +114,23 @@ Game.propTypes = {
 
 const mapStateToProps = (state) => {
   const { gameState } = state;
-
+  // console.log('MSTP', state);
   return {
     board: gameState.board,
     player: gameState.player,
     gameover: gameState.gameover,
-    winner: gameState.winner
+    winner: gameState.winner,
+    scoreboard: gameState.scoreboard,
   };
 };
 
 const mapDispatchToProps = {
   playTurn,
   checkWinner,
-  newGame
+  newGame,
+  setDraws:  (draws) => (dispatch) => {
+    dispatch(setDraws(draws));
+  }
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);

@@ -6,6 +6,7 @@ import { configureStore } from './store';
 import App from './views/App.jsx';
 
 import { newGame as newGameAction } from './actions';
+// track wins per player
 
 // At a later point, we can pull the state stored in local storage (or another source)
 // and use it to create the store from a previous state.

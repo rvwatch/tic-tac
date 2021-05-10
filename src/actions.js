@@ -28,10 +28,30 @@ const winner = player => ({
   payload: player
 });
 
+const setDraws = draws => ({
+  type: types.SET_DRAWS,
+  payload: draws
+})
+
+const setPlayer1Wins = player1wins => ({
+  type: types.SET_PLAYER1WINS,
+  payload: player1wins
+})
+
+const setPlayer2Wins = player2wins => ({
+  type: types.SET_PLAYER2WINS,
+  payload: player2wins
+})
+
+
+
 export {
   newGame,
   gameover,
   movePlayer,
   switchPlayer,
-  winner
+  winner,
+  setDraws, 
+  setPlayer1Wins,
+  setPlayer2Wins
 };

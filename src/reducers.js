@@ -64,14 +64,22 @@ const playerReducer = (state = 1, action) => {
   }
 };
 
-const scoreReducer = (state = {
+const scoreboardState = {
   draws: 0,
-  player1Wins: 0,
-  player2Wins: 0
-}, action) => {
+  player1wins: 0,
+  player2wins: 0
+}
+
+const scoreboardReducer = (state = scoreboardState, action) => {
+  // console.log(action);
   switch (action.type) {
-    case "UPDATE_SCOREBOARD":
-        return action.payload
+    case types.SET_DRAWS:
+      console.log({ ...scoreboardState, draws: action.payload });
+      return {...scoreboardState, draws: action.payload};
+    case types.SET_PLAYER1WINS:
+      return {...scoreboardState, player1Wins: action.payload};
+    case types.SET_PLAYER2WINS:
+      return {...scoreboardState, player2Wins: action.payload};
     default:
       return state
   }
@@ -82,7 +90,7 @@ const reducers = combineReducers({
   gameover: gameoverReducer,
   winner: winnerReducer,
   player: playerReducer,
-  scoreboard: scoreReducer
+  scoreboard: scoreboardReducer
 });
 
 export { reducers as gameState };
