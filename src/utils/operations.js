@@ -4,7 +4,7 @@
   write them and export them here.
 */
 
-import { newGame as newGameAction, gameover, switchPlayer, winner, movePlayer } from '../actions';
+import { newGame as newGameAction, gameover, switchPlayer, winner, movePlayer, setDraw, setPlayerCount } from '../actions';
 import { isWinner, isDraw } from './game';
 
 // NOTE: we can probably use mapDispatchToProps in the component and dispatch each of these
@@ -32,10 +32,13 @@ const checkWinner = (board, player) => (dispatch) => {
   if (isWinner(board, player)) {
     dispatch(winner(player));
     dispatch(gameover());
+    dispatch(setPlayerCount(player));
   } else if (isDraw(board)) {
     dispatch(winner(0));
     dispatch(gameover());
+    dispatch(setDraw());
   } else {
+    console.log("no winner");
     hasWinner = false;
   }
 

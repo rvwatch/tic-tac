@@ -28,10 +28,25 @@ const winner = player => ({
   payload: player
 });
 
+const setDraw = () => ({
+  type: types.DRAWS
+})
+
+const setPlayerCount = player => {
+  const type = player === 1 ? types.PLAYER1_WINS : types.PLAYER2_WINS
+  return {
+    type
+  }
+}
+
+
+
 export {
   newGame,
   gameover,
   movePlayer,
   switchPlayer,
-  winner
+  winner, 
+  setDraw, 
+  setPlayerCount
 };

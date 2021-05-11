@@ -9,6 +9,7 @@ import { playTurn, checkWinner, newGame } from '../../utils/operations';
 import Board from '../components/Board.jsx';
 import PlayerInfo from '../components/PlayerInfo.jsx';
 import GameoverDialog from '../components/GameoverDialog.jsx';
+import ScoreBoard from './Scoreboard.jsx';
 
 class Game extends Component {
   constructor(props, context) {
@@ -25,7 +26,7 @@ class Game extends Component {
   handleBoardOnMove(square) {
     // when a square is clicked we want to mark that square for the current player
 
-    const { board, player, gameover, playTurn, checkWinner } = this.props;
+    const { board, player, gameover, playTurn, checkWinner, winner } = this.props;
     const { row, col } = square;
 
     // only mark if the game is still in progress and the square is empty (none)
@@ -40,6 +41,7 @@ class Game extends Component {
     const hasWinner = checkWinner(board, player);
 
     if (hasWinner) {
+      console.log('handle on move', player, this.props.winner );
       this.setState({ showDialog: true });
     }
   }
@@ -70,10 +72,7 @@ class Game extends Component {
       // Grid 'item' in a container must have columns (xs, sm, md, etc.) that add up to 12, per grid docs:
       // https://material-ui-next.com/layout/grid/
       <div>
-          <h3>Score:</h3>
-          <h4>Draws: {}</h4>
-          <h4>Player1: {}</h4>
-          <h4>Player2: {}</h4>
+        <ScoreBoard />
         <Grid container spacing={16}>
           <Grid item xs={12} sm={6} md={4}>
             <Board board={board} onMove={this.handleBoardOnMove} />
@@ -110,7 +109,7 @@ Game.propTypes = {
 
 const mapStateToProps = (state) => {
   const { gameState } = state;
-
+  console.log(state);
   return {
     board: gameState.board,
     player: gameState.player,
