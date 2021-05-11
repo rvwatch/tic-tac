@@ -11,7 +11,7 @@ import { newGame as newGameAction } from './actions';
 // At a later point, we can pull the state stored in local storage (or another source)
 // and use it to create the store from a previous state.
 const initialState = null;
-const store = configureStore(initialState || {});
+export const store = configureStore(initialState || {});
 
 if (!initialState) {
   // since we don't have any persisted state, we should start a new game when the game loads

@@ -71,15 +71,13 @@ const scoreboardState = {
 }
 
 const scoreboardReducer = (state = scoreboardState, action) => {
-  // console.log(action);
   switch (action.type) {
     case types.SET_DRAWS:
-      console.log({ ...scoreboardState, draws: action.payload });
-      return {...scoreboardState, draws: action.payload};
+      return {...state, draws: action.payload};
     case types.SET_PLAYER1WINS:
-      return {...scoreboardState, player1Wins: action.payload};
+      return {...state, player1wins: action.payload};
     case types.SET_PLAYER2WINS:
-      return {...scoreboardState, player2Wins: action.payload};
+      return {...state, player2wins: action.payload};
     default:
       return state
   }

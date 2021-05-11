@@ -4,8 +4,9 @@
   write them and export them here.
 */
 
-import { newGame as newGameAction, gameover, switchPlayer, winner, movePlayer } from '../actions';
+import { newGame as newGameAction, gameover, switchPlayer, winner, movePlayer, setDraws, setPlayer1Wins, setPlayer2Wins } from '../actions';
 import { isWinner, isDraw } from './game';
+import { store } from '../index';
 
 // NOTE: we can probably use mapDispatchToProps in the component and dispatch each of these
 // actions one after another ourselves, but using redux-thunk to defer or conditionally
@@ -28,13 +29,20 @@ const checkWinner = (board, player) => (dispatch) => {
   // instead of returning a promise like we would if we were making an api call
   // from our operations, we just return a boolean for the game winner
   let hasWinner = true;
+  const state = store.getState();
 
   if (isWinner(board, player)) {
     dispatch(winner(player));
     dispatch(gameover());
+    if (player === 1) {
+      dispatch(setPlayer1Wins(state.gameState.scoreboard.player1wins + 1));
+    } else if (player === 2) {
+      dispatch(setPlayer2Wins(state.gameState.scoreboard.player2wins + 1));
+    }
   } else if (isDraw(board)) {
     dispatch(winner(0));
     dispatch(gameover());
+    dispatch(setDraws(state.gameState.scoreboard.draws + 1));
   } else {
     hasWinner = false;
   }
